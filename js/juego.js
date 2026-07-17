@@ -18,11 +18,11 @@
     champTarget:50
   };
 
-  let S = null; // active game state
-  let champScores = null; // persistent totals across rounds {name: total}
+  let S = null; 
+  let champScores = null; 
 
   // ---------------------------------------------------------------
-  // Deck building
+  // Armado del mazo y barajado
   // ---------------------------------------------------------------
   function shuffle(arr){
     for(let i=arr.length-1;i>0;i--){
@@ -32,7 +32,7 @@
     return arr;
   }
 
-  function buildDeck(mode){
+  function buildDeck(mode){ // 100 cartas numeradas 0-99, 20 con rayo, 20 tormenta si es clásico
     const values = [];
     for(let v=0; v<100; v++) values.push(v);
     shuffle(values);
@@ -51,7 +51,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Setup screen interactions
+  // Instrucciones de la UI
   // ---------------------------------------------------------------
   const modeCards = document.querySelectorAll(".mode-card");
   modeCards.forEach(el=>{
@@ -96,7 +96,7 @@
   });
 
   // ---------------------------------------------------------------
-  // Game lifecycle
+  // Controla la logica de los bots y el temporizador de sus acciones
   // ---------------------------------------------------------------
   let botTimers = [];
   function stopAllBotTimers(){
