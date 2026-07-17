@@ -179,17 +179,34 @@
     return true;
   }
 
+  // Puntaje máximo alcanzable leyendo la fila de izquierda a derecha: busca la
+  // mejor subsecuencia ascendente posible (no solo comparar contra la última
+  // carta contada), porque una carta alta al principio no debe "tapar" una
+  // racha ascendente más larga que viene después. Cada carta vale 1 punto,
+  // +1 si tiene rayo. Las cartas de Tormenta (modo clásico) no participan.
+  function bestOrderedScore(tops, mode){
+    const cards = tops.filter(c => !(mode==="clasico" && c.tormenta));
+    const n = cards.length;
+    if(n===0) return 0;
+    const dp = new Array(n);
+    let best = 0;
+    for(let i=0;i<n;i++){
+      const own = cards[i].rayo ? 2 : 1;
+      dp[i] = own;
+      for(let j=0;j<i;j++){
+        if(cards[j].value < cards[i].value && dp[j] + own > dp[i]){
+          dp[i] = dp[j] + own;
+        }
+      }
+      if(dp[i] > best) best = dp[i];
+    }
+    return best;
+  }
+
   function scoreRow(player){
     const tops = player.row.map(topOf);
-    let last=-1, score=0, penalty=0;
-    for(const c of tops){
-      if(S.mode==="clasico" && c.tormenta){ penalty += 1; continue; }
-      if(c.value > last){
-        score += 1;
-        if(c.rayo) score += 1;
-        last = c.value;
-      }
-    }
+    const penalty = S.mode==="clasico" ? tops.filter(c=>c.tormenta).length : 0;
+    const score = bestOrderedScore(tops, S.mode);
     return { total: score - penalty, score, penalty };
   }
 
@@ -199,7 +216,7 @@
     const candidates = [];
     for(let i=0;i<player.row.length;i++){
       player.row[i].push(card);
-      const val = simulatedOrderScore(player);
+      const val = bestOrderedScore(player.row.map(topOf), S.mode);
       player.row[i].pop();
       candidates.push({i, val});
       if(val > bestVal){ bestVal = val; bestIdx = i; }
@@ -210,22 +227,12 @@
     return bestIdx;
   }
 
-  function simulatedOrderScore(player){
-    const tops = player.row.map(topOf);
-    let last=-1, cnt=0;
-    for(const c of tops){
-      if(S.mode==="clasico" && c.tormenta) continue;
-      if(c.value>last){ cnt++; last=c.value; }
-    }
-    return cnt;
-  }
-
   function bestStormIndex(player){
     // elige la pila donde "tapar" con Tormenta mejora más el orden restante
     let bestIdx = 0, bestVal = -Infinity;
     for(let i=0;i<player.row.length;i++){
       player.row[i].push({id:"sim", value:null, rayo:false, tormenta:true});
-      const val = simulatedOrderScore(player);
+      const val = bestOrderedScore(player.row.map(topOf), S.mode);
       player.row[i].pop();
       if(val > bestVal){ bestVal = val; bestIdx = i; }
     }
