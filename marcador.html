@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Flash 10 — Contador de puntos</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/marcador.css">
+</head>
+<body>
+<div id="app">
+  <a href="index.html" class="back-link">&larr; Menú</a>
+  <h1><span class="ic">🧮</span> Contador de puntos</h1>
+  <p class="subtitle">Para partidas con cartas físicas: registra el puntaje de cada ronda y llevamos la suma total.</p>
+
+  <div id="setup" class="panel">
+    <div class="row">
+      <div class="field">
+        <label>Cantidad de jugadores</label>
+        <select id="playerCount">
+          <option value="2">2 jugadores</option>
+          <option value="3">3 jugadores</option>
+          <option value="4" selected>4 jugadores</option>
+          <option value="5">5 jugadores</option>
+          <option value="6">6 jugadores</option>
+          <option value="7">7 jugadores</option>
+          <option value="8">8 jugadores</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Límite de puntos para ganar</label>
+        <input type="number" inputmode="numeric" id="pointLimit" value="50" min="5" max="500" step="5">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:14px;">
+      <label>Nombres de los jugadores</label>
+      <div class="names-grid" id="namesGrid"></div>
+    </div>
+
+    <div class="setup-actions">
+      <button id="cancelEditBtn" class="secondary hidden">Cancelar</button>
+      <button id="startBtn">Empezar a contar</button>
+    </div>
+  </div>
+
+  <div id="board" class="hidden">
+    <div class="panel topbar">
+      <div class="info">
+        <span class="badge">🏁 Límite: <b id="hudLimit">50</b> pts</span>
+        <span class="badge">🔄 Ronda: <b id="hudRound">0</b></span>
+      </div>
+      <div class="actions">
+        <button class="ghost small" id="editSetupBtn" title="Editar jugadores / límite">✏ Editar</button>
+      </div>
+    </div>
+
+    <div class="champion-banner" id="championBanner">
+      <div class="ic">🏆</div>
+      <div>
+        <div id="championText">—</div>
+        <div class="sub">Podés seguir sumando rondas si quieren jugar de más.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-label">Puntos de la ronda actual</div>
+      <div class="entry-grid" id="entryGrid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="section-label">Historial y totales</div>
+      <div class="table-wrap">
+        <table id="scoreTable"></table>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="danger" id="resetBtn">Reiniciar todo</button>
+    </div>
+  </div>
+
+  <footer>Flash 10 — contador de puntos para partidas en persona.</footer>
+</div>
+
+<div class="bottom-bar" id="bottomBar">
+  <div class="bottom-bar-inner">
+    <button class="secondary" id="undoBtn" title="Deshacer última ronda">↩ Deshacer</button>
+    <button id="addRoundBtn">✅ Agregar ronda</button>
+  </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/marcador.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/*
+  Página "Contador de puntos" (marcador.html) — marcador manual para partidas físicas.
+  Requiere css/base.css cargado antes que este archivo.
+*/
+
+:root{
+  --bar-h:78px; /* alto aproximado de la barra fija inferior */
+}
+
+#app{ max-width:640px; margin:0 auto; padding:14px 14px 24px; }
+/* deja espacio para que la barra fija inferior no tape el contenido */
+body.has-bar #app{ padding-bottom:calc(var(--bar-h) + 20px + env(safe-area-inset-bottom)); }
+
+h1{ font-size:22px; margin:4px 0 2px; letter-spacing:.5px; display:flex; align-items:center; gap:8px; }
+h1 .ic{ color:var(--accent); }
+.subtitle{ color:var(--text-dim); margin:0 0 14px; font-size:13.5px; line-height:1.4; }
+
+.panel{ margin-bottom:12px; }
+
+.names-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:10px; width:100%; }
+
+.setup-actions{ display:flex; gap:10px; margin-top:16px; }
+.setup-actions button{ flex:1 1 0; }
+
+.topbar{ display:flex; flex-direction:column; gap:10px; }
+.topbar .info{ display:flex; gap:8px; flex-wrap:wrap; font-size:12.5px; color:var(--text-dim); }
+.topbar .actions{ justify-content:flex-end; }
+.topbar .actions button{ flex:0 0 auto; }
+
+.champion-banner{
+  display:none; align-items:flex-start; gap:10px; border:2px solid var(--good);
+  background:#0f2a1c; border-radius:12px; padding:12px 14px; margin-bottom:12px;
+  font-size:14px; font-weight:700; line-height:1.35;
+}
+.champion-banner.show{ display:flex; }
+.champion-banner .ic{ font-size:20px; line-height:1; }
+.champion-banner .sub{ font-weight:400; font-size:12px; color:var(--text-dim); margin-top:2px; }
+
+.table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:8px; }
+table{ width:100%; border-collapse:collapse; font-size:13px; }
+th, td{ padding:8px 9px; text-align:center; border-bottom:1px solid var(--panel-border); white-space:nowrap; }
+th{ color:var(--text-dim); font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.3px; position:sticky; top:0; background:var(--panel); }
+th:first-child, td:first-child{ text-align:left; color:var(--text-dim); font-size:12px; position:sticky; left:0; background:var(--panel); }
+tr.total-row td{ font-weight:800; font-size:14.5px; color:var(--text); border-top:2px solid var(--panel-border); border-bottom:none; padding-top:10px; }
+tr.total-row td:first-child{ background:var(--panel); }
+tr.total-row td.leader{ color:var(--good); }
+.crown{ font-size:11px; }
+
+.entry-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(145px,1fr)); gap:10px; width:100%; }
+.entry-cell{ display:flex; flex-direction:column; gap:5px; background:#101830; border:1px solid var(--panel-border); border-radius:10px; padding:9px 10px; }
+.entry-cell .pname{ font-size:12.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.entry-cell .remain{ font-size:10.5px; color:var(--text-dim); }
+.entry-cell input{ width:100%; text-align:center; font-size:18px; font-weight:700; padding:10px 8px; }
+
+/* Barra fija inferior con las acciones más usadas durante la partida */
+.bottom-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:40;
+  display:none; justify-content:center;
+  background:rgba(15,20,36,.94); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  border-top:1px solid var(--panel-border);
+  padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  box-shadow:0 -8px 20px rgba(0,0,0,.35);
+}
+.bottom-bar.show{ display:flex; }
+.bottom-bar-inner{ max-width:640px; width:100%; display:flex; gap:10px; }
+.bottom-bar-inner button{ font-size:16px; padding:14px; min-height:52px; }
+.bottom-bar-inner #undoBtn{ flex:0 0 auto; }
+.bottom-bar-inner #addRoundBtn{ flex:1 1 auto; }
+
+footer{ margin-top:20px; }
+
+@media (min-width:480px){
+  h1{ font-size:26px; }
+  .subtitle{ font-size:14px; }
+}
+@media (min-width:560px){
+  .topbar{ flex-direction:row; justify-content:space-between; align-items:center; }
+  .topbar .actions{ flex-wrap:nowrap; }
+}

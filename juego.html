@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Flash 10</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/juego.css">
+</head>
+<body>
+<div id="app">
+  <a href="index.html" class="back-link">&larr; Menú</a>
+  <h1><span class="bolt">⚡</span> Flash 10</h1>
+  <p class="subtitle">Ordena tus cartas de menor a mayor, de izquierda a derecha. ¡El primero en gritar STOP gana!</p>
+
+  <div id="setup" class="panel">
+    <div class="field" style="gap:8px;">
+      <label>Variante</label>
+      <div class="mode-cards">
+        <div class="mode-card selected" data-mode="truenos">
+          <h3>🌩️ Truenos <span style="font-size:10px;color:var(--accent);">(por defecto)</span></h3>
+          <p>100 cartas numeradas. Empiezas con 8 cartas. Al ordenarlas dices STOP, superas el nivel y añades una 9ª y luego 10ª carta. Gana quien llegue primero a 10 en orden.</p>
+        </div>
+        <div class="mode-card" data-mode="relampagos">
+          <h3>⚡ Relámpagos</h3>
+          <p>100 cartas numeradas, sin Tormenta. Fila de 10 cartas desde el inicio. El primero en ordenarlas y decir STOP gana.</p>
+        </div>
+        <div class="mode-card" data-mode="clasico">
+          <h3>🎴 Clásico</h3>
+          <p>120 cartas: 100 numeradas + 20 de Tormenta. Fila de 10. Las cartas de Tormenta no rompen el orden, pero restan 1 punto si quedan visibles al final.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Jugadores (tú + bots)</label>
+        <select id="playerCount">
+          <option value="2">2 jugadores</option>
+          <option value="3" selected>3 jugadores</option>
+          <option value="4">4 jugadores</option>
+          <option value="5">5 jugadores</option>
+          <option value="6">6 jugadores</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Velocidad de los bots</label>
+        <select id="botSpeed">
+          <option value="slow">Tranquila</option>
+          <option value="normal" selected>Normal</option>
+          <option value="fast">Rápida</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Modo campeonato</label>
+        <select id="champMode">
+          <option value="off" selected>Partida única</option>
+          <option value="on">Jugar a X puntos</option>
+        </select>
+      </div>
+      <div class="field" id="champTargetField" style="display:none;">
+        <label>Puntos para ganar</label>
+        <input type="number" inputmode="numeric" id="champTarget" value="50" min="10" max="200" step="5">
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="startBtn">Empezar partida</button>
+    </div>
+  </div>
+
+  <div id="game">
+    <div class="panel topbar">
+      <div class="info">
+        <span class="badge">🃏 Variante: <b id="hudMode">Truenos</b></span>
+        <span class="badge">🂠 Mazo: <b id="hudDeck">0</b></span>
+        <span class="badge" id="champBadge" style="display:none;">🏆 Meta: <b id="hudTarget">50</b> pts</span>
+      </div>
+      <div class="row">
+        <button class="secondary" id="newRoundBtn" title="Nueva partida">🔁 Nueva</button>
+        <button class="ghost" id="changeSetupBtn" title="Cambiar configuración">⚙ Config</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="deck-area">
+        <div class="deck-pile" id="deckPile" title="Robar carta">MAZO</div>
+        <div>
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px;">Tu carta robada</div>
+          <div class="hand-slot" id="handSlot">vacío</div>
+        </div>
+        <div class="controls">
+          <button id="stopBtn" disabled>¡STOP!</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="board panel" id="board"></div>
+
+    <div class="panel">
+      <div class="section-label">Registro de la partida</div>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <footer>Flash 10 — implementación web no oficial basada en el manual de instrucciones.</footer>
+</div>
+
+<div class="msg-toast" id="toast"></div>
+
+<div id="overlay">
+  <div class="panel box">
+    <h2 id="overlayTitle">¡Fin de la partida!</h2>
+    <p id="overlaySub" style="color:var(--text-dim);"></p>
+    <table class="score-table" id="scoreTable"></table>
+    <div class="actions">
+      <button id="playAgainBtn">Jugar otra ronda</button>
+      <button class="secondary" id="backToSetupBtn">Volver a configuración</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/juego.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+/*
+  Flash 10 — estilos base compartidos por las tres páginas
+  (index.html, juego.html, marcador.html).
+  Cada página además carga su propio css/<pagina>.css con lo específico.
+*/
+
+:root{
+  --bg1:#0f1424;
+  --panel:#1b2440;
+  --panel-border:#2c3960;
+  --accent:#ffb020;
+  --accent2:#4fd1c5;
+  --danger:#ff5d5d;
+  --good:#4ade80;
+  --text:#eef1fb;
+  --text-dim:#9aa4c7;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0; padding:0; min-height:100%;
+  background:radial-gradient(1200px 800px at 20% -10%, #202b52 0%, var(--bg1) 55%), var(--bg1);
+  color:var(--text);
+  font-family:'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+}
+
+/* Utilidad para mostrar/ocultar secciones vía JS (classList.toggle('hidden')) */
+.hidden{ display:none !important; }
+
+/* Enlace "← Menú" para volver a la página de inicio */
+.back-link{
+  display:inline-block; color:var(--text-dim); font-size:13px;
+  text-decoration:none; margin-bottom:8px; padding:4px 0;
+}
+
+/* Tarjeta contenedora usada en la mayoría de las secciones */
+.panel{
+  background:linear-gradient(180deg, var(--panel), #171f38);
+  border:1px solid var(--panel-border);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.25);
+}
+
+/* Fila de campos de formulario (label + input) que se pueden envolver en mobile */
+.row{ display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; }
+.field{ display:flex; flex-direction:column; gap:6px; flex:1 1 140px; min-width:0; }
+.field label{ font-size:11.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.5px; }
+
+/* Título de sección dentro de un panel (ej. "Puntos de la ronda actual") */
+.section-label{
+  font-size:11.5px; color:var(--text-dim); margin-bottom:8px;
+  text-transform:uppercase; letter-spacing:.4px;
+}
+
+select, input[type=number], input[type=text]{
+  background:#0f1730; color:var(--text); border:1px solid var(--panel-border);
+  border-radius:9px; padding:11px 12px; font-size:16px; outline:none;
+  width:100%; min-height:46px;
+  -webkit-appearance:none; appearance:none;
+}
+select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239aa4c7'><path d='M5.5 7.5l4.5 5 4.5-5z'/></svg>");
+  background-repeat:no-repeat; background-position:right 10px center; padding-right:32px;
+}
+select:focus, input:focus{ border-color:var(--accent2); }
+
+button{
+  cursor:pointer; border:none; border-radius:10px; padding:12px 18px;
+  font-size:14.5px; font-weight:600; letter-spacing:.3px;
+  background:var(--accent); color:#1a1200;
+  transition:transform .08s ease, filter .12s ease;
+  min-height:46px;
+  -webkit-tap-highlight-color:transparent;
+}
+button:hover{ filter:brightness(1.08); }
+button:active{ transform:scale(0.97); }
+button:disabled{ opacity:.35; cursor:not-allowed; filter:none; transform:none; }
+button.secondary{ background:#25315a; color:var(--text); }
+button.danger{ background:var(--danger); color:#2a0000; }
+button.ghost{ background:transparent; color:var(--text-dim); border:1px solid var(--panel-border); }
+button.small{ padding:9px 14px; font-size:13px; min-height:40px; }
+
+.badge{
+  display:inline-flex; align-items:center; gap:4px;
+  background:#101830; border:1px solid var(--panel-border); border-radius:999px;
+  padding:5px 10px; font-size:12px;
+}
+.badge b{ color:var(--text); }
+
+.actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+footer{ text-align:center; color:var(--text-dim); font-size:11px; margin-top:24px; }
