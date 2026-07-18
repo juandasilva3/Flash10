@@ -1,6 +1,6 @@
-# Flash 10
+# ⚡ 10
 
-Implementación web (no oficial) del juego de cartas **Flash 10**, basada en su manual de instrucciones. Incluye un modo para jugar online contra bots y un contador de puntos para usar con las cartas físicas.
+Implementación web (no oficial) del juego de cartas **Flash 10**. Incluye un modo para jugar contra bots y un contador de puntos para usar con las cartas físicas.
 
 No usa frameworks, bundlers ni dependencias — es HTML, CSS y JavaScript planos. No hace falta instalar nada ni levantar un servidor: **con abrir `index.html` en el navegador alcanza.**
 
