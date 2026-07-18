@@ -496,15 +496,21 @@
       rows.forEach(r=>{
         champScores[r.p.name] = (champScores[r.p.name]||0) + r.s.total;
       });
+      // en campeonato, el orden de la tabla refleja quién va primero en el
+      // torneo (puntaje acumulado), no solo quién ganó esta ronda
+      rows.sort((a,b)=> (champScores[b.p.name]||0) - (champScores[a.p.name]||0));
     }
+
+    const champLeaderMax = cfg.championship ? Math.max(...rows.map(r=>champScores[r.p.name]||0)) : null;
 
     let thead = `<tr><th>Jugador</th><th>Puntos ronda</th>${cfg.championship?'<th>Total campeonato</th>':''}</tr>`;
     let body = rows.map(r=>{
       const champTotal = cfg.championship ? (champScores[r.p.name]||0) : null;
+      const isChampLeader = cfg.championship && champTotal===champLeaderMax;
       return `<tr>
         <td>${escapeHtml(r.p.name)}${r.p.id===S.winnerId?' 🏆':''}</td>
         <td>${r.s.total} <span style="color:var(--text-dim);font-size:11px;">(${r.s.score}${S.mode==='clasico' && r.s.penalty ? ' − '+r.s.penalty+' tormenta':''})</span></td>
-        ${cfg.championship ? `<td><b>${champTotal}</b></td>` : ''}
+        ${cfg.championship ? `<td><b>${champTotal}</b>${isChampLeader ? ' 👑' : ''}</td>` : ''}
       </tr>`;
     }).join("");
     table.innerHTML = thead + body;
