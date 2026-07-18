@@ -5,13 +5,13 @@
   "use strict";
 
   // ---------------------------------------------------------------
-  // Config / state
+  // Configuración y estado del juego
   // ---------------------------------------------------------------
   const BOT_NAMES = ["Bot Nova","Bot Cronos","Bot Vega","Bot Rex","Bot Luma"];
   const SPEED_MS = { slow:[900,1500], normal:[550,1000], fast:[300,600] };
 
   let cfg = {
-    mode:"truenos",
+    mode:"clasico",
     playerCount:3,
     botSpeed:"normal",
     championship:false,
@@ -164,7 +164,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Core rules
+  // Lógica de juego: orden de las cartas, puntaje, etc.
   // ---------------------------------------------------------------
   function topOf(pile){ return pile[pile.length-1]; }
 
@@ -240,7 +240,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Human actions
+  // Acciones del jugador (humano)
   // ---------------------------------------------------------------
   function humanDraw(){
     if(S.gameOver || !S.revealed) return;
@@ -352,7 +352,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Deck exhaustion / end of game
+  // Finalización de la partida
   // ---------------------------------------------------------------
   function maybeEndByExhaustion(){
     if(S.gameOver) return;
@@ -375,7 +375,7 @@
   }
 
   // ---------------------------------------------------------------
-  // Rendering
+  // Renderizado de la UI
   // ---------------------------------------------------------------
   function cardHueFor(card){
     return Math.floor(card.value/20) % 5;
@@ -481,7 +481,8 @@
     const table = document.getElementById("scoreTable");
 
     const winner = S.players.find(p=>p.id===S.winnerId);
-    title.textContent = S.endReason==="stop" ? `🏆 ¡${winner.name} gana!` : `🂠 Mazo agotado — gana ${winner.name}`;
+    const verb = winner.isHuman ? "ganas" : "gana";
+    title.textContent = S.endReason==="stop" ? `🏆 ¡${winner.name} ${verb}!` : `🂠 Mazo agotado — ${verb} ${winner.name}`;
     sub.textContent = S.endReason==="stop"
       ? "Fila completa en orden ascendente."
       : "Se calcula la puntuación de cada jugador según el orden de sus cartas.";
